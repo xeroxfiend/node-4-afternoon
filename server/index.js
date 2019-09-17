@@ -5,8 +5,8 @@ const session = require('express-session')
 const {SERVER_PORT, SESSION_SECRET} = process.env
 const middleware = require('./middlewares/checkForSession')
 const swagCtrl = require('./controllers/swagController')
-
-
+const authCrl = require('./controllers/authController')
+const cartCtrl = require('./controllers/cartController')
 
 
 app.use(express.json())
@@ -19,11 +19,26 @@ app.use(session({
     }    
 }))
 
+
 app.use(middleware.checkForSession)
 
 
 //endpoints
 app.get('/api/swag', swagCtrl.read)
+
+app.post('/api/login', authCrl.login)
+
+app.post('/api/register', authCrl.register)
+
+app.post('/api/signout', authCrl.signout)
+
+app.get('/api/user', authCrl.getUser)
+
+app.post('/api/cart/checkout', cartCtrl.checkout)
+
+app.post('/api/cart/:id', cartCtrl.add)
+
+app.delete('/api/cart/:id', cartCtrl.delete)
 
 
 

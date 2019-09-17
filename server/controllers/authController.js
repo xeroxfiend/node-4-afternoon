@@ -4,26 +4,28 @@ let id = 1;
 module.exports = {
   login: (req, res, next) => {
     const {username, password} = req.body;
-    if (username === users.username && password === users.password) {
+
+    const user = users.find(user => user.username === username && user.password === password)
+
+    if (user) {
       req.session.user.username = username;
       res.status(200).send(req.session.user);
     } else {
-      res.state(500).send(alert("User not found"));
+      res.status(500).send("User not found");
     }
   },
 
   register: (req, res, next) => {
     const {username, password} = req.body
-    let newId = id
     const newUser = {
         username,
         password,
-        id: newId
+        id
     }
     id++
     users.push(newUser)
     req.session.user.username = username
-    res.send(200).send(req.session.user)
+    res.status(200).send(req.session.user)
   },
 
   signout: (req, res, next) => {
