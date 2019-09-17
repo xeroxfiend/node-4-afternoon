@@ -4,6 +4,7 @@ const app = express()
 const session = require('express-session')
 const {SERVER_PORT, SESSION_SECRET} = process.env
 const middleware = require('./middlewares/checkForSession')
+const swagCtrl = require('./controllers/swagController')
 
 
 
@@ -19,6 +20,10 @@ app.use(session({
 }))
 
 app.use(middleware.checkForSession)
+
+
+//endpoints
+app.get('/api/swag', swagCtrl.read)
 
 
 
