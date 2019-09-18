@@ -3,6 +3,7 @@ const swag = require("../models/swag");
 module.exports = {
   add: (req, res, next) => {
     const {id} = req.params;
+    console.log(id)
 
     const index = req.session.user.cart.findIndex(swag => +swag.id === +id);
 
@@ -31,6 +32,7 @@ module.exports = {
   },
 
   checkout: (req, res, next) => {
+    console.log('hello')
       const {user} = req.session
       user.cart = []
       user.total = 0

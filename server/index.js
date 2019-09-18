@@ -22,8 +22,8 @@ app.use(
   })
 );
 
-app.use(middleware.checkForSession);
 app.use(express.static(`${__dirname}/../build`));
+app.use(middleware.checkForSession);
 
 //----- endpoints ------ //
 
