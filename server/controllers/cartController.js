@@ -11,6 +11,7 @@ module.exports = {
 
       req.session.user.cart.push(selectedSwag);
       req.session.user.total += selectedSwag.price;
+      console.log(selectedSwag.price)
     }
     res.status(200).send(req.session.user);
   },

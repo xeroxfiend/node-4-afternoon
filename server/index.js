@@ -7,8 +7,11 @@ const middleware = require('./middlewares/checkForSession')
 const swagCtrl = require('./controllers/swagController')
 const authCrl = require('./controllers/authController')
 const cartCtrl = require('./controllers/cartController')
+const searchCtrl = require('./controllers/searchController')
 
+//middlewares
 
+app.use(express.static(`${__dirname}/../build`))
 app.use(express.json())
 app.use(session({
     resave: false,
@@ -23,9 +26,14 @@ app.use(session({
 app.use(middleware.checkForSession)
 
 
-//endpoints
+//----- endpoints ------ //
+
+//swag
 app.get('/api/swag', swagCtrl.read)
 
+app.get('/api/search', searchCtrl.search)
+
+//auth
 app.post('/api/login', authCrl.login)
 
 app.post('/api/register', authCrl.register)
@@ -34,11 +42,13 @@ app.post('/api/signout', authCrl.signout)
 
 app.get('/api/user', authCrl.getUser)
 
+//cart
 app.post('/api/cart/checkout', cartCtrl.checkout)
 
 app.post('/api/cart/:id', cartCtrl.add)
 
 app.delete('/api/cart/:id', cartCtrl.delete)
+
 
 
 
